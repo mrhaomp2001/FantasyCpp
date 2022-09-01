@@ -1,10 +1,20 @@
 #define mapMaxCout 16
 int mapLoadCount;
 
-string mapNameLoad[mapMaxCout];
-int mapHLoad[mapMaxCout];
-int mapWLoad[mapMaxCout];
-int mapLoad[64][64][mapMaxCout];
+typedef struct
+{
+    string mapName;
+    int mapH;
+    int mapW;
+    int mapStruct[64][64];
+
+    void setMapStruct(int x, int y, int num)
+    {
+        mapStruct[x][y] = num;
+    }
+} Map;
+
+Map mapLoad[mapMaxCout];
 
 string toString(char *a)
 {
@@ -45,16 +55,23 @@ int loadMapToGame()
             fclose(f);
             break;
         }
-        fgets(mapName, 64, f);
-        mapNameLoad[u] = toString(mapName);
-        fscanf(f, "%d", &mapWLoad[u]);
-        fscanf(f, "%d", &mapHLoad[u]);
 
-        for (i = 0; i < mapHLoad[u]; i++)
+        fgets(mapName, 64, f);
+        if (mapName[strlen(mapName) - 1] == '\n')
         {
-            for (j = 0; j < mapWLoad[u]; j++)
+            mapName[strlen(mapName) - 1] = '\0';
+        }
+
+        mapLoad[u].mapName = toString(mapName);
+
+        fscanf(f, "%d", &mapLoad[u].mapW);
+        fscanf(f, "%d", &mapLoad[u].mapH);
+
+        for (i = 0; i < mapLoad[u].mapH; i++)
+        {
+            for (j = 0; j < mapLoad[u].mapW; j++)
             {
-                fscanf(f, "%i", &mapLoad[i][j][u]);
+                fscanf(f, "%i", &mapLoad[u].mapStruct[i][j]);
             }
         }
         u++;
@@ -63,4 +80,44 @@ int loadMapToGame()
     } while (1);
 
     return 0;
+}
+
+void showMap(Map map)
+{
+    int y, x;
+
+    for (y = 0; y < map.mapH; y++)
+    {
+        for (x = 0; x < map.mapW; x++)
+        {
+            if (x == player.getLocalX() && y == player.getLocalY())
+                printC("P", 9);
+            else if (map.mapStruct[y][x] == -1)
+                printC("#", 7);
+            else if (map.mapStruct[y][x] == 0)
+                printC("/", 7);
+            else if (map.mapStruct[y][x] == -2)
+                printC("-", 7);
+            else if (map.mapStruct[y][x] == -4)
+                printC("E", 4);
+            else if (map.mapStruct[y][x] == -5)
+                printC("~", 1);
+            else if (map.mapStruct[y][x] == 4)
+                printC("S", 23); // Slime
+            else if (map.mapStruct[y][x] == 6)
+                printC("R", 23); // Rabbit
+            else if (map.mapStruct[y][x] == 8)
+                printC("W", 23); // Wofl
+            else if (map.mapStruct[y][x] == 9)
+                printC("B", 23); // Bee
+            else if (map.mapStruct[y][x] == 10)
+                printC("O", 9); // Call dungeonGen()
+            else if (map.mapStruct[y][x] == 11)
+                printC("C", 23);
+            else
+                printC("?", 14);
+        }
+        cout << "\n";
+    }
+    return;
 }

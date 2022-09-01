@@ -1,0 +1,17 @@
+void ShowAllMap()
+{    
+    int u, i, j;
+    for (u = 0; u < mapLoadCount; u++)
+    {
+        cout << mapNameLoad[u] << endl;
+        for (i = 0; i < mapHLoad[u]; i++)
+        {
+            for (j = 0; j < mapWLoad[u]; j++)
+            {
+                cout << mapLoad[i][j][u] << " ";
+            }
+            cout << "\n";
+        }
+        cout << hr('=', 2) << "\n";
+    }
+}

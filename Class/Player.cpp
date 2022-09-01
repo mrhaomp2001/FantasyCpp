@@ -5,6 +5,7 @@ protected:
     int hp, hpMax;
     int localX, localY;
     int globalX, globalY;
+    int mapLocation;
 
 public:
     Player() {}
@@ -35,5 +36,20 @@ public:
     int getLocalY()
     {
         return localY;
+    }
+
+    int getMapLocation()
+    {
+        return mapLocation;
+    }
+
+    void setLocalX(int x)
+    {
+        localX = x;
+    }
+
+    void setLocalY(int y)
+    {
+        localY = y;
     }
 };
