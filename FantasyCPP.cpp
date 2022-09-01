@@ -1,32 +1,38 @@
-#include "./Class/lib.cpp"
+#include "./class/lib.cpp"
 
-using namespace std;
+int gameState;
 
+#include "./class/map.cpp"
+#include "./class/player.cpp"
+#include "./class/menu.cpp"
 
-int random(int minN, int maxN)
-{
-    return minN + rand() % (maxN + 1 - minN);
-}
-
-int randomChoice(int option1, int option2)
-{
-    int temp;
-    temp = random(1, 2);
-    if (temp == 1)
-        return option1;
-    return option2;
-}
+Player player = Player();
 
 void start()
 {
     srand(time(NULL));
+
+    gameState = 1;
+
+    loadMapToGame();
 }
 
 void update()
 {
-    MainMenu mainMenu = MainMenu();
-
-    mainMenu.ShowMenu();
+    int u, i, j;
+    for (u = 0; u < mapLoadCount; u++)
+    {
+        cout << mapNameLoad[u];
+        for (i = 0; i < mapHLoad[u]; i++)
+        {
+            for (j = 0; j < mapWLoad[u]; j++)
+            {
+                cout << mapLoad[i][j][u] << " ";
+            }
+            cout << "\n";
+        }
+        cout << "--\n";
+    }
 }
 
 int main()

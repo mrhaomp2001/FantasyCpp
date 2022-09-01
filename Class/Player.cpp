@@ -1,24 +1,39 @@
-#include <iostream>
-#include <string.h> 
-using namespace std;
-
 class Player
 {
 protected:
-    /* data */
     string name;
-    int hp;
+    int hp, hpMax;
+    int localX, localY;
+    int globalX, globalY;
 
 public:
-    Player()
-    {
-    }
+    Player() {}
     Player(const Player &playerT)
     {
         hp = playerT.hp;
-    };
+    }
     ~Player()
     {
-       //cout << "Huy" << endl;
-    };
+        cout << "Huy Player" << endl;
+    }
+
+    int getHp()
+    {
+        return hp;
+    }
+
+    int getHpMax()
+    {
+        return hpMax;
+    }
+
+    int getLocalX()
+    {
+        return localX;
+    }
+
+    int getLocalY()
+    {
+        return localY;
+    }
 };

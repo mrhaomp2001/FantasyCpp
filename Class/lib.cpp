@@ -1,15 +1,11 @@
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h> // sometime we will need, but not now :D
-#include <time.h>   // support random method
+#include <stdlib.h>
+#include <time.h>
 #include <math.h>
+#include <conio.h>
 #include <string.h>
-
-#include <windows.h> // 1. system("cls"); clear the screen. 2. exit(1); exit the program.
-
-#include "../Class/Player.cpp"
-#include "../Class/Menu.cpp"
-
+#include <windows.h>
+using namespace std;
 
 int setColor(int code)
 {
@@ -25,3 +21,18 @@ char printC(string info, int color)
     setColor(15);
     return ' ';
 }
+
+int random(int minN, int maxN)
+{
+    return minN + rand() % (maxN + 1 - minN);
+}
+
+int randomChoice(int option1, int option2)
+{
+    int temp;
+    temp = random(1, 2);
+    if (temp == 1)
+        return option1;
+    return option2;
+}
+
