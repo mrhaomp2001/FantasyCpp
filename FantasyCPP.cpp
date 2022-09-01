@@ -8,21 +8,32 @@ Player player = Player();
 #include "./class/map.cpp"
 #include "./class/menu.cpp"
 
-
 void start()
 {
+    SetConsoleTitleA("Fantasy Opening");
     srand(time(NULL));
 
     screenStage = 1;
 
     loadMapToGame();
-    player.setLocalX(2);
-    player.setLocalY(1);
+    player.setLocalX(33);
+    player.setLocalY(8);
+    player.setMapLocation(4);
 }
-
 void update()
 {
-    showMap(mapLoad[4]);
+    do
+    {
+        if (screenStage == 1)
+        {
+            system("cls");
+            showMap(mapLoad[player.getMapLocation()]);
+            message("Cpp-chan: ", 11, 1);
+            message(" - Hello U!", 11, 2);
+            playerMove();
+            
+        }
+    } while (screenStage != 0);
 }
 
 int main()

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <windows.h>
 #include <iomanip>
+#include <tchar.h>
 using namespace std;
 
 int setColor(int code)
@@ -47,4 +48,38 @@ int randomChoice(int option1, int option2)
     if (temp == 1)
         return option1;
     return option2;
+}
+
+COORD GetConsoleCursorPosition(HANDLE hConsoleOutput)
+{
+    CONSOLE_SCREEN_BUFFER_INFO cbsi;
+    if (GetConsoleScreenBufferInfo(hConsoleOutput, &cbsi))
+    {
+        return cbsi.dwCursorPosition;
+    }
+    else
+    {
+        // The function failed. Call GetLastError() for details.
+        COORD invalid = { 0, 0 };
+        return invalid;
+    }
+}
+
+void message(string info, int color, SHORT posY)
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD Position;
+
+    COORD pastPosition;
+    pastPosition = GetConsoleCursorPosition(hStdout);
+    
+    Position.X = 70;
+    Position.Y = posY;
+
+    SetConsoleCursorPosition(hStdout, Position);
+
+    printC(info, color);
+
+    SetConsoleCursorPosition(hStdout, pastPosition);
+
 }

@@ -52,4 +52,9 @@ public:
     {
         localY = y;
     }
+
+    void setMapLocation(int mapIndex)
+    {
+        mapLocation = mapIndex;
+    }
 };
