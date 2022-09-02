@@ -163,24 +163,9 @@ void playerMove()
         {
             printC("\n Khong the di vao tuong! \n", 4);
         }
-        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == 10)
-        {
-            player.setLocalX(player.getLocalX() - 1);
-        }
         else
         {
-            int i, eventMapId;
-            eventMapId = mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()];
-            for(i = 0; i < eventCount; i++)
-            {
-                if(eventMapId == listEvent[i].getEventId())
-                {
-                    listEvent[i].triggerEvent();
-                    break;
-                }
-            }
-            
-            player.setLocalX(player.getLocalX() - 1); 
+            player.setLocalX(player.getLocalX() - 1);
         }
         break;
 
@@ -190,12 +175,9 @@ void playerMove()
         {
             printC("\n Khong the di vao tuong! \n", 4);
         }
-        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == 10)
-        {
-            player.setLocalX(player.getLocalX() + 1);
-        }
         else
         {
+            player.setLocalX(player.getLocalX() + 1);
         }
         break;
 
@@ -205,12 +187,9 @@ void playerMove()
         {
             printC("\n Khong the di vao tuong! \n", 4);
         }
-        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == 10)
-        {
-            player.setLocalY(player.getLocalY() - 1);
-        }
         else
         {
+            player.setLocalY(player.getLocalY() - 1);
         }
         break;
 
@@ -220,18 +199,16 @@ void playerMove()
         {
             printC("\n Khong the di vao tuong! \n", 4);
         }
-        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == 10)
-        {
-            player.setLocalY(player.getLocalY() + 1);
-        }
         else
         {
+            player.setLocalY(player.getLocalY() + 1);
         }
         break;
 
     default:
         break;
     }
+
     if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()] == 10)
     {
         int i;
@@ -240,6 +217,19 @@ void playerMove()
             if (player.getLocalX() == mapLoad[player.getMapLocation()].mapPortalX[i] && player.getLocalY() == mapLoad[player.getMapLocation()].mapPortalY[i])
             {
                 playerChangeMap(i);
+                break;
+            }
+        }
+    }
+    if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()] >= 0)
+    {
+        int i, eventMapId;
+        eventMapId = mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()];
+        for (i = 0; i < eventCount; i++)
+        {
+            if (eventMapId == listEvent[i].getEventId())
+            {
+                listEvent[i].triggerEvent();
                 break;
             }
         }

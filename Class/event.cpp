@@ -44,18 +44,16 @@ struct Event
         eventEnemyDef = eventEnemyDefT;
     }
 
-    ~Event() {}
-
     void triggerEvent()
     {
-        if (eventId == 0)
+        if (eventType == 0)
         {
             printC("Event Text \n", 14);
             cout << "type: " << eventType << endl;
             cout << "Text: " << eventText << endl;
 
         }
-        else if (eventId == 1)
+        else if (eventType == 1)
         {
             printC("Event Enemy \n", 14);
             cout << "type: " << eventType << endl;
@@ -65,7 +63,6 @@ struct Event
         else 
         {
             printC("Loi Event\n", 14);
-            
         }
     }
 
@@ -73,8 +70,13 @@ struct Event
     {
         return eventId;
     }
+
+    int getEventType()
+    {
+        return eventType;
+    }
 };
 
-int eventCount = 2;
+int eventCount;
 Event currentEvent = Event();
 Event listEvent[16];

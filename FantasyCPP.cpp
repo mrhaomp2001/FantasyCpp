@@ -17,8 +17,12 @@ void start()
 
     screenStage = 1;
 
+    eventCount = 4; 
     listEvent[0] = Event(0, 0, "This is Text Event! \n", 0, 0, 0, 0, 0 );
     listEvent[1] = Event(1, 1, "Enemy Test", 3, 1, 0);
+    listEvent[2] = Event(1, 2, "Enemy Test #2!", 3, 1, 0);
+    listEvent[3] = Event(0, 3, "This is Text Event #3! \n", 0, 0, 0, 0, 0 );
+    
     listEvent[0].triggerEvent();
     //listEvent[0].triggerEvent();
     loadMapToGame();
