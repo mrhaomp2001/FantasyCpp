@@ -19,7 +19,7 @@ int setColor(int code)
 char printC(string info, int color)
 {
     setColor(color);
-    cout << info;
+    std::cout << info;
     setColor(15);
     return ' ';
 }
@@ -81,5 +81,17 @@ void message(string info, int color, SHORT posY)
     printC(info, color);
 
     SetConsoleCursorPosition(hStdout, pastPosition);
+}
 
+string toString(char *a)
+{
+    int i;
+    int size;
+    size = strlen(a);
+    string s = "";
+    for (i = 0; i < size; i++)
+    {
+        s = s + a[i];
+    }
+    return s;
 }

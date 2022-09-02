@@ -3,7 +3,7 @@ int mapLoadCount;
 
 struct Map
 {
-    string mapName;
+    std::string mapName;
     int mapH;
     int mapW;
     int mapStruct[64][64];
@@ -30,19 +30,6 @@ struct Map
 
 Map mapLoad[mapMaxCout];
 
-string toString(char *a)
-{
-    int i;
-    int size;
-    size = strlen(a);
-    string s = "";
-    for (i = 0; i < size; i++)
-    {
-        s = s + a[i];
-    }
-    return s;
-}
-
 int loadMapToGame()
 {
     int i, j, u = 0;
@@ -64,8 +51,7 @@ int loadMapToGame()
 
         if ((f = fopen(s1, "r")) == NULL)
         {
-            // system("cls");
-            cout << "Xong roi ban \n";
+            // cout << "Xong roi ban \n";
             fclose(f);
             break;
         }
@@ -128,7 +114,7 @@ void showMap(Map map)
                 printC("E", 4);
             else if (map.mapStruct[x][y] == -5)
                 printC("~", 1);
-            else if (map.mapStruct[x][y] == 4)
+            else if (map.mapStruct[x][y] == 1)
                 printC("S", 23); // Slime
             else if (map.mapStruct[x][y] == 6)
                 printC("R", 23); // Rabbit
@@ -148,9 +134,16 @@ void showMap(Map map)
     return;
 }
 
+void playerChangeMap(int mapIndex)
+{
+    player.setLocalX(2);
+    player.setLocalY(2);
+    player.setMapLocation(mapIndex);
+}
+
 void playerMove()
 {
-    Sleep(250);
+    Sleep(500);
     char moveInput;
 
     // Debug:
@@ -170,59 +163,85 @@ void playerMove()
         {
             printC("\n Khong the di vao tuong! \n", 4);
         }
-        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == -2)
+        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == 10)
         {
             player.setLocalX(player.getLocalX() - 1);
         }
         else
         {
+            int i, eventMapId;
+            eventMapId = mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()];
+            for(i = 0; i < eventCount; i++)
+            {
+                if(eventMapId == listEvent[i].getEventId())
+                {
+                    listEvent[i].triggerEvent();
+                    break;
+                }
+            }
+            
+            player.setLocalX(player.getLocalX() - 1); 
         }
         break;
+
+    case 'd':
+    case 'D':
+        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -1)
         {
-        case 'd':
-        case 'D':
-            if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -1)
+            printC("\n Khong the di vao tuong! \n", 4);
+        }
+        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == 10)
+        {
+            player.setLocalX(player.getLocalX() + 1);
+        }
+        else
+        {
+        }
+        break;
+
+    case 'w':
+    case 'W':
+        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -1)
+        {
+            printC("\n Khong the di vao tuong! \n", 4);
+        }
+        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == 10)
+        {
+            player.setLocalY(player.getLocalY() - 1);
+        }
+        else
+        {
+        }
+        break;
+
+    case 's':
+    case 'S':
+        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -1)
+        {
+            printC("\n Khong the di vao tuong! \n", 4);
+        }
+        else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -2 || mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == 10)
+        {
+            player.setLocalY(player.getLocalY() + 1);
+        }
+        else
+        {
+        }
+        break;
+
+    default:
+        break;
+    }
+    if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()] == 10)
+    {
+        int i;
+        for (i = 0; i < mapLoad[player.getMapLocation()].mapPortalCount; i++)
+        {
+            if (player.getLocalX() == mapLoad[player.getMapLocation()].mapPortalX[i] && player.getLocalY() == mapLoad[player.getMapLocation()].mapPortalY[i])
             {
-                printC("\n Khong the di vao tuong! \n", 4);
+                playerChangeMap(i);
+                break;
             }
-            else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -2)
-            {
-                player.setLocalX(player.getLocalX() + 1);
-            }
-            else
-            {
-            }
-            break;
-        case 'w':
-        case 'W':
-            if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -1)
-            {
-                printC("\n Khong the di vao tuong! \n", 4);
-            }
-            else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -2)
-            {
-                player.setLocalY(player.getLocalY() - 1);
-            }
-            else
-            {
-            }
-            break;
-        case 's':
-        case 'S':
-            if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -1)
-            {
-                printC("\n Khong the di vao tuong! \n", 4);
-            }
-            else if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -2)
-            {
-                player.setLocalY(player.getLocalY() + 1);
-            }
-            else
-            {
-            }
-            break;
-        default:
-            break;
         }
     }
 }

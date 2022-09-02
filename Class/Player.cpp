@@ -1,8 +1,14 @@
 class Player
 {
 protected:
-    string name;
+    std::string name;
     int hp, hpMax;
+    int mp, mpMax;
+    int atk;
+    int def;
+    int exp;
+    int gold;
+    int ep;
     int localX, localY;
     int globalX, globalY;
     int mapLocation;
