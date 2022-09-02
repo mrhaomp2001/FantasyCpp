@@ -18,7 +18,7 @@ void start()
     loadMapToGame();
     player.setLocalX(33);
     player.setLocalY(8);
-    player.setMapLocation(4);
+    player.setMapLocation(0);
 }
 void update()
 {
@@ -26,7 +26,7 @@ void update()
     {
         if (screenStage == 1)
         {
-            system("cls");
+            // system("cls");
             showMap(mapLoad[player.getMapLocation()]);
             message("Cpp-chan: ", 11, 1);
             message(" - Hello U!", 11, 2);

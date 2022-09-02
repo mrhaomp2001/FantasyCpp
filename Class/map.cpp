@@ -1,18 +1,32 @@
 #define mapMaxCout 16
 int mapLoadCount;
 
-typedef struct
+struct Map
 {
     string mapName;
     int mapH;
     int mapW;
     int mapStruct[64][64];
 
+    int mapPortalCount;
+    int mapPortalX[mapMaxCout];
+    int mapPortalY[mapMaxCout];
+    int mapPortalDestination[mapMaxCout];
+
     void setMapStruct(int x, int y, int num)
     {
         mapStruct[x][y] = num;
     }
-} Map;
+
+    void setPortalOnMap()
+    {
+        int i;
+        for (int i = 0; i < mapPortalCount; i++)
+        {
+            setMapStruct(mapPortalX[i], mapPortalY[i], 10);
+        }
+    }
+};
 
 Map mapLoad[mapMaxCout];
 
@@ -50,7 +64,7 @@ int loadMapToGame()
 
         if ((f = fopen(s1, "r")) == NULL)
         {
-            system("cls");
+            // system("cls");
             cout << "Xong roi ban \n";
             fclose(f);
             break;
@@ -74,6 +88,17 @@ int loadMapToGame()
                 fscanf(f, "%i", &mapLoad[u].mapStruct[j][i]);
             }
         }
+
+        fscanf(f, "%d", &mapLoad[u].mapPortalCount);
+
+        for (i = 0; i < mapLoad[u].mapPortalCount; i++)
+        {
+            fscanf(f, "%d", &mapLoad[u].mapPortalX[i]);
+            fscanf(f, "%d", &mapLoad[u].mapPortalY[i]);
+            fscanf(f, "%d", &mapLoad[u].mapPortalDestination[i]);
+        }
+        mapLoad[u].setPortalOnMap();
+
         u++;
         mapLoadCount++;
         fclose(f);
