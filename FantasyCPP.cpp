@@ -8,6 +8,7 @@ Player player = Player();
 #include "./class/event.cpp"
 
 #include "./class/map.cpp"
+
 #include "./class/menu.cpp"
 
 void start()
@@ -17,14 +18,8 @@ void start()
 
     screenStage = 1;
 
-    eventCount = 4; 
-    listEvent[0] = Event(0, 0, "This is Text Event! \n", 0, 0, 0, 0, 0 );
-    listEvent[1] = Event(1, 1, "Enemy Test", 3, 1, 0);
-    listEvent[2] = Event(1, 2, "Enemy Test #2!", 3, 1, 0);
-    listEvent[3] = Event(0, 3, "This is Text Event #3! \n", 0, 0, 0, 0, 0 );
-    
-    listEvent[0].triggerEvent();
-    //listEvent[0].triggerEvent();
+    // listEvent[0].triggerEvent();
+    loadEventToGame();
     loadMapToGame();
     playerChangeMap(0);
 }
@@ -34,10 +29,7 @@ void update()
     {
         if (screenStage == 1)
         {
-            // system("cls");
             showMap(mapLoad[player.getMapLocation()]);
-            message("Cpp-chan: ", 11, 1);
-            message(" - Hello U!", 11, 2);
             playerMove();
         }
         if (screenStage == 2)

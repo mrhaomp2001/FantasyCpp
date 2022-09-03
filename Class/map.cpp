@@ -23,7 +23,7 @@ struct Map
         int i;
         for (int i = 0; i < mapPortalCount; i++)
         {
-            setMapStruct(mapPortalX[i], mapPortalY[i], 10);
+            setMapStruct(mapPortalX[i], mapPortalY[i], -3);
         }
     }
 };
@@ -36,7 +36,7 @@ int loadMapToGame()
     char s1[32] = "./map/map";
     char s2[3];
     char s3[32] = ".txt";
-    char mapName[32];
+    char mapName[64];
 
     do
     {
@@ -93,47 +93,6 @@ int loadMapToGame()
     return 0;
 }
 
-void showMap(Map map)
-{
-    int y, x;
-    printC(map.mapName, 12);
-    cout << endl;
-    for (y = 0; y < map.mapH; y++)
-    {
-        for (x = 0; x < map.mapW; x++)
-        {
-            if (x == player.getLocalX() && y == player.getLocalY())
-                printC("P", 9);
-            else if (map.mapStruct[x][y] == -1)
-                printC("#", 7);
-            else if (map.mapStruct[x][y] == 0)
-                printC("/", 7);
-            else if (map.mapStruct[x][y] == -2)
-                printC("-", 7);
-            else if (map.mapStruct[x][y] == -4)
-                printC("E", 4);
-            else if (map.mapStruct[x][y] == -5)
-                printC("~", 1);
-            else if (map.mapStruct[x][y] == 1)
-                printC("S", 23); // Slime
-            else if (map.mapStruct[x][y] == 6)
-                printC("R", 23); // Rabbit
-            else if (map.mapStruct[x][y] == 8)
-                printC("W", 23); // Wofl
-            else if (map.mapStruct[x][y] == 9)
-                printC("B", 23); // Bee
-            else if (map.mapStruct[x][y] == 10)
-                printC("O", 9); // Call dungeonGen()
-            else if (map.mapStruct[x][y] == 11)
-                printC("C", 23);
-            else
-                printC("?", 14);
-        }
-        cout << "\n";
-    }
-    return;
-}
-
 void playerChangeMap(int mapIndex)
 {
     player.setLocalX(2);
@@ -141,97 +100,9 @@ void playerChangeMap(int mapIndex)
     player.setMapLocation(mapIndex);
 }
 
-void playerMove()
+void mapReset()
 {
-    Sleep(500);
-    char moveInput;
-
-    // Debug:
-    // cout << " target x = " << player.getLocalX() - 1
-    //      << "\n target y = " << player.getLocalY()
-    //      << "\n target value = " << mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()]
-    //      << "\n player X: " << player.getLocalX()
-    //      << "\n player X: " << player.getLocalY()
-    //      << "\n Map Player: " << player.getMapLocation()
-    //      << "\n target value base = " << mapLoad[4].mapStruct[4][2];
-    moveInput = getch();
-    switch (moveInput)
-    {
-    case 'a':
-    case 'A':
-        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()] == -1)
-        {
-            printC("\n Khong the di vao tuong! \n", 4);
-        }
-        else
-        {
-            player.setLocalX(player.getLocalX() - 1);
-        }
-        break;
-
-    case 'd':
-    case 'D':
-        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() + 1][player.getLocalY()] == -1)
-        {
-            printC("\n Khong the di vao tuong! \n", 4);
-        }
-        else
-        {
-            player.setLocalX(player.getLocalX() + 1);
-        }
-        break;
-
-    case 'w':
-    case 'W':
-        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() - 1] == -1)
-        {
-            printC("\n Khong the di vao tuong! \n", 4);
-        }
-        else
-        {
-            player.setLocalY(player.getLocalY() - 1);
-        }
-        break;
-
-    case 's':
-    case 'S':
-        if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY() + 1] == -1)
-        {
-            printC("\n Khong the di vao tuong! \n", 4);
-        }
-        else
-        {
-            player.setLocalY(player.getLocalY() + 1);
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()] == 10)
-    {
-        int i;
-        for (i = 0; i < mapLoad[player.getMapLocation()].mapPortalCount; i++)
-        {
-            if (player.getLocalX() == mapLoad[player.getMapLocation()].mapPortalX[i] && player.getLocalY() == mapLoad[player.getMapLocation()].mapPortalY[i])
-            {
-                playerChangeMap(i);
-                break;
-            }
-        }
-    }
-    if (mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()] >= 0)
-    {
-        int i, eventMapId;
-        eventMapId = mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()];
-        for (i = 0; i < eventCount; i++)
-        {
-            if (eventMapId == listEvent[i].getEventId())
-            {
-                listEvent[i].triggerEvent();
-                break;
-            }
-        }
-    }
+    player.setLocalX(2);
+    player.setLocalY(2);
+    loadMapToGame();
 }

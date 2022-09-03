@@ -24,6 +24,14 @@ char printC(string info, int color)
     return ' ';
 }
 
+char printC(char info, int color)
+{
+    setColor(color);
+    std::cout << info;
+    setColor(15);
+    return ' ';
+}
+
 char hr(char symbol, int color)
 {
     int i;
@@ -60,29 +68,48 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput)
     else
     {
         // The function failed. Call GetLastError() for details.
-        COORD invalid = { 0, 0 };
+        COORD invalid = {0, 0};
         return invalid;
     }
 }
 
-void message(string info, int color, SHORT posY)
+SHORT messageCurrentPosX, messageCurrentPosY;
+COORD pastPosition;
+
+void messageStart(SHORT posY)
 {
     HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD Position;
 
-    COORD pastPosition;
     pastPosition = GetConsoleCursorPosition(hStdout);
+
+    messageCurrentPosY = posY;
+    messageCurrentPosX = 70;
     
-    Position.X = 70;
-    Position.Y = posY;
+    Position.X = messageCurrentPosX;
+    Position.Y = messageCurrentPosY;
 
     SetConsoleCursorPosition(hStdout, Position);
-
-    printC(info, color);
-
-    SetConsoleCursorPosition(hStdout, pastPosition);
 }
 
+void messageBr()
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD Position;
+
+    messageCurrentPosX = 70;
+    messageCurrentPosY++;
+
+    Position.X = messageCurrentPosX;
+    Position.Y = messageCurrentPosY;
+    SetConsoleCursorPosition(hStdout, Position);
+}
+
+void messageEnd()
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hStdout, pastPosition);
+}
 string toString(char *a)
 {
     int i;
