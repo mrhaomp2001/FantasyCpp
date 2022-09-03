@@ -21,7 +21,7 @@ char printC(string info, int color)
     setColor(color);
     std::cout << info;
     setColor(15);
-    return ' ';
+    return '\0';
 }
 
 char printC(char info, int color)
@@ -29,7 +29,15 @@ char printC(char info, int color)
     setColor(color);
     std::cout << info;
     setColor(15);
-    return ' ';
+    return '\0';
+}
+
+char printC(int info, int color)
+{
+    setColor(color);
+    std::cout << info;
+    setColor(15);
+    return '\0';
 }
 
 char hr(char symbol, int color)

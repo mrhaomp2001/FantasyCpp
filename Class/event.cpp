@@ -20,7 +20,20 @@ struct Event
     char eventSymbol;
     int eventSymbolColor;
 
-    Event() {}
+    Event()
+    {
+        eventName = "";
+        eventText = "";
+        eventPlayerHp = 0;
+        eventPlayerMp = 0;
+        eventPlayerGold = 0;
+        eventPlayerEp = 0;
+        eventPlayerExp = 0;
+
+        eventEnemyHp = 0;
+        eventEnemyAtk = 0;
+        eventEnemyDef = 0;
+    }
 
     void triggerEvent()
     {
@@ -123,8 +136,6 @@ int loadEventToGame()
 
         fscanf(f, "%c\n", &listEvent[u].eventSymbol);
         fscanf(f, "%d\n", &listEvent[u].eventSymbolColor);
-
-
 
         u++;
         eventLoadCount++;

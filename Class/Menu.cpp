@@ -3,15 +3,15 @@ void showMap(Map map)
 {
     int y, x;
     // printC(map.mapName, 12);
-    cout << endl;
     for (y = 0; y < map.mapH; y++)
     {
+        cout << "\t";
         for (x = 0; x < map.mapW; x++)
         {
             if (x == player.getLocalX() && y == player.getLocalY())
                 printC("P", 9);
             else if (map.mapStruct[x][y] == -1)
-                printC("#", 7);
+                printC("#", 15);
             else if (map.mapStruct[x][y] == -2)
                 printC("-", 8);
             else if (map.mapStruct[x][y] == -3)
@@ -115,7 +115,6 @@ void playerMove()
 
     if (currentPos == -3)
     {
-        cout << "Check" << endl;
         int i;
         for (i = 0; i < mapLoad[player.getMapLocation()].mapPortalCount; i++)
         {
@@ -126,6 +125,21 @@ void playerMove()
             }
         }
     }
+}
+
+void travelScreen()
+{
+    system("cls");
+
+    printC("\n", 15);
+
+    showMap(mapLoad[player.getMapLocation()]);
+
+    int currentPos = mapLoad[player.getMapLocation()].mapStruct[player.getLocalX()][player.getLocalY()];
+
+    printC("\n Khu vuc (location): ", 15);
+    printC(mapLoad[player.getMapLocation()].mapName, 9);
+    printC("\n", 15);
 
     if (currentPos >= 0)
     {
@@ -156,4 +170,64 @@ void playerMove()
             }
         }
     }
+
+    messageStart(1);
+    printC("********************************", 7);
+
+    messageBr();
+    printC("*", 7);
+    cout << setw(10) << right;
+    printC("HP: ", 4);
+    cout << setw(9) << right;
+    printC(player.getHp(), 4);
+    printC("/", 4);
+    cout << setw(10) << left;
+    printC(player.getHpMax(), 4);
+    printC("*", 7);
+
+    messageBr();
+    printC("*", 7);
+    cout << setw(10) << right;
+    printC("MP: ", 1);
+    cout << setw(9) << right;
+    printC(player.getMp(), 1);
+    printC("/", 1);
+    cout << setw(10) << left;
+    printC(player.getMpMax(), 1);
+    printC("*", 7);
+
+    messageBr();
+    printC("*", 7);
+    cout << setw(10) << right;
+    printC("Gold: ", 6);
+    cout << setw(10) << right;
+    printC(player.getGold(), 6);
+    cout << setw(10) << left << " ";
+    printC("*", 7);
+
+    messageBr();
+    printC("********************************", 7);
+
+    messageBr();
+    printC(" - Ban la ", 7);
+    printC("P", 9);
+    printC("!", 7);
+
+    printC("( > You're ", 7);
+    printC("P", 9);
+    printC("!)", 7);
+
+    messageBr();
+    printC(" - An ", 7);
+    printC("W, A, S, D ", 13);
+    printC("de di chuyen. ", 7);
+
+    messageBr();
+    printC(" > (Press ", 7);
+    printC("W, A, S, D ", 13);
+    printC("to move.) ", 7);
+
+    messageEnd();
+
+    playerMove();
 }
