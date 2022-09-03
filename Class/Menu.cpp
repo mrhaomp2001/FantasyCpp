@@ -5,7 +5,7 @@ void showMap(Map map)
     // printC(map.mapName, 12);
     for (y = 0; y < map.mapH; y++)
     {
-        cout << "\t";
+        cout << "";
         for (x = 0; x < map.mapW; x++)
         {
             if (x == player.getLocalX() && y == player.getLocalY())
@@ -37,17 +37,7 @@ void showMap(Map map)
 
 void playerMove()
 {
-    Sleep(500);
     char moveInput;
-
-    // Debug:
-    // cout << " target x = " << player.getLocalX() - 1
-    //      << "\n target y = " << player.getLocalY()
-    //      << "\n target value = " << mapLoad[player.getMapLocation()].mapStruct[player.getLocalX() - 1][player.getLocalY()]
-    //      << "\n player X: " << player.getLocalX()
-    //      << "\n player X: " << player.getLocalY()
-    //      << "\n Map Player: " << player.getMapLocation()
-    //      << "\n target value base = " << mapLoad[4].mapStruct[4][2];
 
     moveInput = getch();
     // system("cls");

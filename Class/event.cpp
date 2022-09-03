@@ -1,7 +1,10 @@
 struct Event
 {
+    // Global setting
     int eventType;
     int eventId;
+    char eventSymbol;
+    int eventSymbolColor;
 
     // type 0 = Text Event
     std::string eventName;
@@ -17,8 +20,8 @@ struct Event
     int eventEnemyAtk;
     int eventEnemyDef;
 
-    char eventSymbol;
-    int eventSymbolColor;
+    // type 3 = shop
+
 
     Event()
     {
@@ -87,52 +90,60 @@ int loadEventToGame()
         }
 
         fscanf(f, "%d", &listEvent[u].eventType);
-
         listEvent[u].eventId = u;
 
-        fscanf(f, "%d", &listEvent[u].eventPlayerHp);
-        fscanf(f, "%d", &listEvent[u].eventPlayerMp);
-        fscanf(f, "%d", &listEvent[u].eventPlayerGold);
-        fscanf(f, "%d", &listEvent[u].eventPlayerEp);
-        fscanf(f, "%d", &listEvent[u].eventPlayerExp);
-
-        fscanf(f, "%d", &listEvent[u].eventEnemyHp);
-        fscanf(f, "%d", &listEvent[u].eventEnemyAtk);
-        fscanf(f, "%d\n", &listEvent[u].eventEnemyDef);
-
-        fgets(eventLoadName, 256, f);
-        if (eventLoadName[strlen(eventLoadName) - 1] == '\n')
+        if (listEvent[u].eventType == 0 || listEvent[u].eventType == 1)
         {
-            eventLoadName[strlen(eventLoadName) - 1] = '\0';
-        }
 
-        int loopForBreak;
+            fscanf(f, "%d", &listEvent[u].eventPlayerHp);
+            fscanf(f, "%d", &listEvent[u].eventPlayerMp);
+            fscanf(f, "%d", &listEvent[u].eventPlayerGold);
+            fscanf(f, "%d", &listEvent[u].eventPlayerEp);
+            fscanf(f, "%d", &listEvent[u].eventPlayerExp);
 
-        for (loopForBreak = 0; loopForBreak < (strlen(eventLoadName) - 1); loopForBreak++)
-        {
-            if (eventLoadName[loopForBreak] == ';')
+            fscanf(f, "%d", &listEvent[u].eventEnemyHp);
+            fscanf(f, "%d", &listEvent[u].eventEnemyAtk);
+            fscanf(f, "%d\n", &listEvent[u].eventEnemyDef);
+
+            fgets(eventLoadName, 256, f);
+            if (eventLoadName[strlen(eventLoadName) - 1] == '\n')
             {
-                eventLoadName[loopForBreak] = '\n';
+                eventLoadName[strlen(eventLoadName) - 1] = '\0';
             }
-        }
 
-        listEvent[u].eventName = toString(eventLoadName);
+            int loopForBreak;
 
-        fgets(eventLoadText, 256, f);
-        if (eventLoadText[strlen(eventLoadText) - 1] == '\n')
-        {
-            eventLoadText[strlen(eventLoadText) - 1] = '\0';
-        }
-
-        for (loopForBreak = 0; loopForBreak < (strlen(eventLoadText - 1)); loopForBreak++)
-        {
-            if (eventLoadText[loopForBreak] == ';')
+            for (loopForBreak = 0; loopForBreak < (strlen(eventLoadName) - 1); loopForBreak++)
             {
-                eventLoadText[loopForBreak] = '\n';
+                if (eventLoadName[loopForBreak] == ';')
+                {
+                    eventLoadName[loopForBreak] = '\n';
+                }
             }
+
+            listEvent[u].eventName = toString(eventLoadName);
+
+            fgets(eventLoadText, 256, f);
+            if (eventLoadText[strlen(eventLoadText) - 1] == '\n')
+            {
+                eventLoadText[strlen(eventLoadText) - 1] = '\0';
+            }
+
+            for (loopForBreak = 0; loopForBreak < (strlen(eventLoadText - 1)); loopForBreak++)
+            {
+                if (eventLoadText[loopForBreak] == ';')
+                {
+                    eventLoadText[loopForBreak] = '\n';
+                }
+            }
+
+            listEvent[u].eventText = toString(eventLoadText);
+        }
+        else if(listEvent[u].eventType == 2)
+        {
+
         }
 
-        listEvent[u].eventText = toString(eventLoadText);
 
         fscanf(f, "%c\n", &listEvent[u].eventSymbol);
         fscanf(f, "%d\n", &listEvent[u].eventSymbolColor);
