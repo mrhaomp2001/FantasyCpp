@@ -20,8 +20,7 @@ struct Event
     int eventEnemyAtk;
     int eventEnemyDef;
 
-    // type 3 = shop
-
+    // type 2 = shop
 
     Event()
     {
@@ -51,6 +50,10 @@ struct Event
             printC("Event Enemy \n", 14);
             cout << "type: " << eventType << endl;
             cout << "Enemy name: " << eventText << endl;
+        }
+        else if (eventType == 2)
+        {
+
         }
         else
         {
@@ -129,7 +132,7 @@ int loadEventToGame()
                 eventLoadText[strlen(eventLoadText) - 1] = '\0';
             }
 
-            for (loopForBreak = 0; loopForBreak < (strlen(eventLoadText - 1)); loopForBreak++)
+            for (loopForBreak = 0; loopForBreak < (strlen(eventLoadText) - 1); loopForBreak++)
             {
                 if (eventLoadText[loopForBreak] == ';')
                 {
@@ -139,11 +142,9 @@ int loadEventToGame()
 
             listEvent[u].eventText = toString(eventLoadText);
         }
-        else if(listEvent[u].eventType == 2)
+        else if (listEvent[u].eventType == 2)
         {
-
         }
-
 
         fscanf(f, "%c\n", &listEvent[u].eventSymbol);
         fscanf(f, "%d\n", &listEvent[u].eventSymbolColor);

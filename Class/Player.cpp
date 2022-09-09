@@ -4,9 +4,10 @@ private:
     std::string name;
     int hp, hpMax;
     int mp, mpMax;
+    int hunger, hungerMax;
     int atk;
     int def;
-    int exp;
+    int exp, lv;
     int gold;
     int ep;
     int localX, localY;
@@ -54,4 +55,10 @@ public:
     int getGlobalY() { return this->globalY; }
     void setMapLocation(int mapLocation) { this->mapLocation = mapLocation; }
     int getMapLocation() { return this->mapLocation; }
+    void setHunger(int hunger) { this->hunger = hunger; }
+    int getHunger() { return this->hunger; }
+    void setHungerMax(int hungerMax) { this->hungerMax = hungerMax; }
+    int getHungerMax() { return this->hungerMax; }
+    void setLv(int lv) { this->lv = lv; }
+    int getLv() { return this->lv; }
 };

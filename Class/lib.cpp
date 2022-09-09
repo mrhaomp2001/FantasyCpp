@@ -93,7 +93,7 @@ void messageStart(SHORT posY)
 
     messageCurrentPosY = posY;
     messageCurrentPosX = 70;
-    
+
     Position.X = messageCurrentPosX;
     Position.Y = messageCurrentPosY;
 
@@ -130,3 +130,4 @@ string toString(char *a)
     }
     return s;
 }
+

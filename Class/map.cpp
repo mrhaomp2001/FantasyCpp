@@ -64,24 +64,24 @@ int loadMapToGame()
 
         mapLoad[u].mapName = toString(mapName);
 
-        fscanf(f, "%d", &mapLoad[u].mapW);
-        fscanf(f, "%d", &mapLoad[u].mapH);
+        fscanf(f, "%3d", &mapLoad[u].mapW);
+        fscanf(f, "%3d", &mapLoad[u].mapH);
 
         for (i = 0; i < mapLoad[u].mapH; i++)
         {
             for (j = 0; j < mapLoad[u].mapW; j++)
             {
-                fscanf(f, "%i", &mapLoad[u].mapStruct[j][i]);
+                fscanf(f, "%3d", &mapLoad[u].mapStruct[j][i]);
             }
         }
 
-        fscanf(f, "%d", &mapLoad[u].mapPortalCount);
+        fscanf(f, "%3d", &mapLoad[u].mapPortalCount);
 
         for (i = 0; i < mapLoad[u].mapPortalCount; i++)
         {
-            fscanf(f, "%d", &mapLoad[u].mapPortalX[i]);
-            fscanf(f, "%d", &mapLoad[u].mapPortalY[i]);
-            fscanf(f, "%d", &mapLoad[u].mapPortalDestination[i]);
+            fscanf(f, "%3d", &mapLoad[u].mapPortalX[i]);
+            fscanf(f, "%3d", &mapLoad[u].mapPortalY[i]);
+            fscanf(f, "%3d", &mapLoad[u].mapPortalDestination[i]);
         }
         mapLoad[u].setPortalOnMap();
 
