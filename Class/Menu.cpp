@@ -266,6 +266,51 @@ void battleScreen()
     system("cls");
     char choice;
 
+    cout << "\n\t"
+         << "[" << printC(currentEvent.eventName, 11) << "]\n";
+
+    cout << currentEvent.eventText << "\n\n";
+}
+
+void battleScreenShowStatus(char *choice)
+{
+    if (*choice == '1')
+    {
+        if ((player.getAtk() - currentEvent.eventEnemyDef) > 0)
+        {
+            cout << printC(" - Ban tan cong, ke dich nhan ", 15) << player.getAtk() - currentEvent.eventEnemyDef << printC(" sat thuong! \n", 15) << endl;
+
+            currentEvent.eventEnemyHp -= (player.getAtk() - currentEvent.eventEnemyDef);
+        }
+        else
+        {
+            cout << printC(" - Ban qua yeu! Khong tao ra sat thuong! \n", 15);
+        }
+
+        if ((currentEvent.eventEnemyAtk - player.getDef()) > 0)
+        {
+            cout << printC(" - Ke dich tan cong, ban nhan ", 15) << currentEvent.eventEnemyAtk - player.getDef() << printC(" sat thuong! \n", 15) << endl;
+
+            player.setHp((player.getHp() - (currentEvent.eventEnemyAtk - player.getDef())));
+        }
+        else
+        {
+            cout << printC(" Doi phuong qua yeu! Khong tao ra sat thuong! \n", 15) << endl;
+        }
+    }
+}
+
+void battleScreenShowMenu(char *choice)
+{
+    cout << "\t" << setw(50) << left << printC("***************************************************", 7) << endl;
+    cout << "\t" << setw(50) << left << printC("* 1. Tan cong (> Attack). ", 15) << "*" << endl;
+    cout << "\t" << setw(50) << left << printC("* 2. Phong thu va hoi mau (> Defense and heal). ", 15) << "*" << endl;
+    cout << "\t" << setw(50) << left << printC("* 3. Ma thuat (> Magic). ", 15) << "*" << endl;
+    cout << "\t" << setw(50) << left << printC("* 4. Dung vat pham (> Use item). ", 15) << "*" << endl;
+    cout << "\t" << setw(50) << left << printC("* 5. Chay! (> Run!). ", 15) << "*" << endl;
+    cout << "\t" << setw(50) << left << printC("***************************************************\n", 7) << endl;
+
+#pragma region
     // New Message
     messageStart(1);
     printC("********************************", 7);
@@ -332,16 +377,16 @@ void battleScreen()
     printC("to move. ", 7);
 
     messageEnd();
+#pragma endregion
 
-    cout << "\n\t"
-         << "[" << printC(currentEvent.eventName, 11) << "]\n";
+    if (currentEvent.eventEnemyHp <= 0)
+    {
+        screenStage = 1;
+        cout << printC(" -> Chien thang! \n\n", 15) << endl;
+        cout << printC(" --=> [ An phim bat ky de tiep tuc ] <=-- \n", 15) << endl;
 
-    cout << currentEvent.eventText << "\n\n";
-    hr('=', 7);
-    cout << "\n";
-    cout << printC(" 1. Tan cong (> Attack). \n", 15);
-    cout << printC(" 2. Phong thu va hoi mau (> Defense and heal). \n", 15);
-    cout << printC(" 3. Ma thuat (> Magic). \n", 15);
-    cout << printC(" 4. Dung vat pham (> Use item). \n", 15);
-    cout << printC(" 5. Chay! (> Run!). \n", 15);
+        getch();
+        return;
+    }
+    *choice = getch();
 }

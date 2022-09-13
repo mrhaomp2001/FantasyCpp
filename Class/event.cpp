@@ -47,9 +47,8 @@ struct Event
         }
         else if (eventType == 1)
         {
-            printC("Event Enemy \n", 14);
-            cout << "type: " << eventType << endl;
-            cout << "Enemy name: " << eventText << endl;
+            cout << printC("\n Ban doi dien voi [",11) << eventName << printC("]", 11) << endl;
+            screenStage = 2;
         }
         else if (eventType == 2)
         {

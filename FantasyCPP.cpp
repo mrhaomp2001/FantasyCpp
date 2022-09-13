@@ -13,14 +13,14 @@ void start()
     SetConsoleTitleA("Fantasy Opening");
     srand(time(NULL));
 
-    screenStage = 2;
+    screenStage = 1;
 
     // listEvent[0].triggerEvent();
     loadEventToGame();
     loadMapToGame();
     playerChangeMap(0);
-    player.setAtk(1);
-    player.setDef(1);
+    player.setAtk(4);
+    player.setDef(2);
     player.setEp(0);
     player.setExp(500000);
     player.setGold(50000);
@@ -37,8 +37,7 @@ void start()
 
 void update()
 {
-    char battleChoice;
-
+    char battleChoice;3
     do
     {
         if (screenStage == 1)
@@ -52,6 +51,8 @@ void update()
             // 3. Show Choice
 
             battleScreen();
+            battleScreenShowStatus(&battleChoice);
+            battleScreenShowMenu(&battleChoice);
             
         }
     } while (screenStage != 0);
